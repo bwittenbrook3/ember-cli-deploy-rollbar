@@ -154,41 +154,41 @@ module.exports = {
         return RSVP.all(promiseArray);
       },
 
-      didDeploy: function(context) {
-        var didDeployHook = this.readConfig('didDeploy');
+      // didDeploy: function(context) {
+      //   var didDeployHook = this.readConfig('didDeploy');
 
-        if (didDeployHook) {
-          return didDeployHook.call(this, context);
-        }
+      //   if (didDeployHook) {
+      //     return didDeployHook.call(this, context);
+      //   }
 
-        var accessServerToken = this.readConfig('accessServerToken');
-        var environment = this.readConfig('environment');
-        var revision = this.readConfig('revisionKey');
-        var username = this.readConfig('username');
+      //   var accessServerToken = this.readConfig('accessServerToken');
+      //   var environment = this.readConfig('environment');
+      //   var revision = this.readConfig('revisionKey');
+      //   var username = this.readConfig('username');
 
-        var formData = new FormData();
+      //   var formData = new FormData();
 
-        formData.append('access_token', accessServerToken);
-        formData.append('revision', revision);
-        formData.append('environment', environment);
+      //   formData.append('access_token', accessServerToken);
+      //   formData.append('revision', revision);
+      //   formData.append('environment', environment);
 
-        if (username) {
-          formData.append('local_username', username);
-        }
+      //   if (username) {
+      //     formData.append('local_username', username);
+      //   }
 
-        return new RSVP.Promise(function(resolve, reject) {
-          formData.submit('https://api.rollbar.com/api/1/deploy', function(error, result) {
-            if (error) {
-              reject(error);
-            }
-            result.resume();
+      //   return new RSVP.Promise(function(resolve, reject) {
+      //     formData.submit('https://api.rollbar.com/api/1/deploy', function(error, result) {
+      //       if (error) {
+      //         reject(error);
+      //       }
+      //       result.resume();
 
-            result.on('end', function() {
-              resolve();
-            });
-          });
-        });
-      }
+      //       result.on('end', function() {
+      //         resolve();
+      //       });
+      //     });
+      //   });
+      // }
     });
 
     return new DeployPlugin();
